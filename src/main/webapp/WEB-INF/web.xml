@@ -4,4 +4,34 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>SendMail</servlet-name>
+  	<display-name>SendMail</display-name>
+  	<description></description>
+  	<servlet-class>controller.SendMail</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>LoginExecutive</servlet-name>
+  	<display-name>LoginExecutive</display-name>
+  	<description></description>
+  	<servlet-class>controller.LoginExecutive</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Logout</servlet-name>
+  	<display-name>Logout</display-name>
+  	<description></description>
+  	<servlet-class>database.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SendMail</servlet-name>
+  	<url-pattern>/SendMail</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginExecutive</servlet-name>
+  	<url-pattern>/LoginExecutive</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Logout</servlet-name>
+  	<url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
 </web-app>
