@@ -61,10 +61,10 @@
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" style="margin-left: 800px;">
           <li class="nav-item active">
-            <a class="nav-link" href="newsfeed.php">Home</a>
+            <a class="nav-link" href="newsfeed.jsp">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="profiles.php">Profiles</a>
+            <a class="nav-link" href="profiles.jsp">Profiles</a>
           </li>
          <li class="nav-item">
             <a class="nav-link" href="request.html">Request for fund</a>

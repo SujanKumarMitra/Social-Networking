@@ -257,4 +257,39 @@ public class CRUD implements Properties {
 		return result;
 		
 	}
+
+	public static ArrayList<Post> fetchRecentPosts(int id)
+	{
+		ArrayList<Post> posts = null;
+		Post post = null;
+		try {
+			posts = new ArrayList<>();
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT * FROM posts WHERE user_id=? ORDER BY id DESC LIMIT 3");
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			while(rs.next())
+			{
+				post = new Post();
+				post.setId(rs.getInt("id"));
+				post.setName(rs.getString("Name"));
+				post.setUserId(rs.getInt("user_id"));
+				post.setContent(rs.getString("Content"));
+				posts.add(post);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return posts;
+		
+	}
 }
