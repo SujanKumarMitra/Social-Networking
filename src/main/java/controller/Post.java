@@ -5,7 +5,6 @@ public class Post {
 	private String name;
 	private int userId;
 	private String content;
-	private int like;
 	public Post()
 	{
 		super();
@@ -33,12 +32,6 @@ public class Post {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public int getLike() {
-		return like;
-	}
-	public void setLike(int like) {
-		this.like = like;
 	}
 	
 }

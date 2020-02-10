@@ -1,7 +1,3 @@
-<?php
-session_start();
-
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -48,7 +44,7 @@ session_start();
             <a class="nav-link" href="friends.php">Friends</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="logout_submit.php">Logout</a>
+            <a class="nav-link" href="Logout">Logout</a>
           </li>
         </ul>
       </div>
@@ -60,9 +56,8 @@ session_start();
           <h1 style="margin-bottom: 40px; color:orange">
             Post :
           </h1>
-          <form action="post_upload_submit.php" method="POST">
+          <form action="PostUpload" method="POST">
             <div class="form-group">
-             <!-- <input type="number" name="user_id" value="<?php echo $_SESSION['user_id'];?>" hidden>-->
              
               <input
                 type="text"

@@ -5,7 +5,13 @@
 <%@page import="controller.*" %>
 <%@page import="database.*" %>
 <%
-	User user = (User) request.getSession().getAttribute("user");
+	User user = null;
+	user = (User)session.getAttribute("user");
+	if(user==null)
+	{
+		response.sendRedirect("login.html");
+		return;
+	}
 	ArrayList<Post> posts = CRUD.fetchPosts();
 	int hour = new Date().getHours();
 	String message = null;
@@ -61,13 +67,13 @@
             <a class="nav-link" href="profiles.php">Profiles</a>
           </li>
          <li class="nav-item">
-            <a class="nav-link" href="request.php">Request for fund</a>
+            <a class="nav-link" href="request.html">Request for fund</a>
           </li>
          <li class="nav-item">
-            <a class="nav-link" href="show_request.php">Your Requests</a>
+            <a class="nav-link" href="show_request.jsp">Your Requests</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="friends.php">Friends</a>
+            <a class="nav-link" href="friends.jsp">Friends</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Logout">Logout</a>
@@ -77,7 +83,7 @@
         <form class="form-inline my-2 my-lg-0">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
             <a
-              href="post_upload.php"
+              href="post_upload.jsp"
               style="text-decoration: none;color: rgb(0, 255, 64);"
               >Post</a
             >
@@ -85,7 +91,7 @@
         </form>
       </div>
     </nav>
-
+   
     <div class="alert alert-dark alert-dismissible fade show" role="alert">
         <%= message %> <strong><%= user.getName() %>!</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -148,7 +154,7 @@
 								<a href='like_done.php?post_id=$row[id]'
 									class='fas fa-heart effect'
 									style='font-size: 25px; margin-right: 50px;'></a>
-								<%=post.getLike() +" likes." %>
+								<%=CRUD.getLikeFromPost(post.getId()) +" likes." %>
 							</div>
 							<div class='col'>
 								<form action='comment_done.php' method='POST'>
