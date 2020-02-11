@@ -45,7 +45,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-      <a class="navbar-brand" href="newsfeed.php">beTogether</a>
+      <a class="navbar-brand" href="newsfeed.jsp">beTogether</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -151,18 +151,18 @@
 
 						<div class='row'>
 							<div class='col'>
-								<a href='like_done.php?post_id=$row[id]'
+								<a href='Like?post_id=<%=post.getId() %>'
 									class='fas fa-heart effect'
-									style='font-size: 25px; margin-right: 50px;'></a>
+									style='font-size: 25px; margin-right: 50px;'>Like</a>
 								<%=CRUD.getLikeFromPost(post.getId()) +" likes." %>
 							</div>
 							<div class='col'>
-								<form action='comment_done.php' method='POST'>
-									<input type='number' name='post_id' value='$row[id]' hidden>
+								<form action='Comment' method='POST'>
+									<input type='number' name='post_id' value='<%=post.getId() %>' hidden>
 									<div class='input-group mb-3'>
 										<input type='text' class='form-control  bg-dark'
 											placeholder='Comment' aria-label='Recipients username'
-											aria-describedby='button-addon2' name='coment_input'
+											aria-describedby='button-addon2' name='comment_input'
 											required />
 										<input type='submit'
 											class='btn btn-outline-secondary input-group-append'
@@ -171,11 +171,11 @@
 								</form>
 							</div>
 						</div>
-						<a href='comment.php?post_id=$row[id]'
+						<a href='view_comments.jsp?post_id=<%=post.getId() %>'
 							style='text-decoration: none; color: #fff;'>View all
 							Comments</a>
 						<br>
-						<a href='like.php?post_id=$row[id]'
+						<a href='view_likes.jsp?post_id=<%=post.getId() %>'
 							style='text-decoration: none; color: #fff;'>View all likes</a>
 					</div>
 				</div>

@@ -34,6 +34,48 @@
   	<description></description>
   	<servlet-class>controller.RequestSubmit</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Update</servlet-name>
+  	<display-name>Update</display-name>
+  	<description></description>
+  	<servlet-class>controller.Update</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>OTPSend</servlet-name>
+  	<display-name>OTPSend</display-name>
+  	<description></description>
+  	<servlet-class>controller.OTPSend</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>OTPCheck</servlet-name>
+  	<display-name>OTPCheck</display-name>
+  	<description></description>
+  	<servlet-class>controller.OTPCheck</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>PasswordUpdate</servlet-name>
+  	<display-name>PasswordUpdate</display-name>
+  	<description></description>
+  	<servlet-class>controller.PasswordUpdate</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Delete</servlet-name>
+  	<display-name>Delete</display-name>
+  	<description></description>
+  	<servlet-class>controller.Delete</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Like</servlet-name>
+  	<display-name>Like</display-name>
+  	<description></description>
+  	<servlet-class>controller.Like</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Comment</servlet-name>
+  	<display-name>Comment</display-name>
+  	<description></description>
+  	<servlet-class>controller.Comment</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>SendMail</servlet-name>
   	<url-pattern>/SendMail</url-pattern>
@@ -53,5 +95,33 @@
   <servlet-mapping>
   	<servlet-name>RequestSubmit</servlet-name>
   	<url-pattern>/RequestSubmit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Update</servlet-name>
+  	<url-pattern>/Update</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OTPSend</servlet-name>
+  	<url-pattern>/OTPSend</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OTPCheck</servlet-name>
+  	<url-pattern>/OTPCheck</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PasswordUpdate</servlet-name>
+  	<url-pattern>/PasswordUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Delete</servlet-name>
+  	<url-pattern>/Delete</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Like</servlet-name>
+  	<url-pattern>/Like</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Comment</servlet-name>
+  	<url-pattern>/Comment</url-pattern>
   </servlet-mapping>
 </web-app>

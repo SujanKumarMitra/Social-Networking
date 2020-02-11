@@ -213,9 +213,9 @@ ArrayList<Post> posts = CRUD.fetchRecentPosts(user.getId());
 	<footer class="footer-section">
 		<div class="container text-center">
 			<a href="newsfeed.jsp" type="button" class="btn btn-outline-warning" style="margin-right: 60px;margin-left: 90px; margin-top: 30px; width:150px">Home</a>
-			<a href="update.php" type="button" class="btn btn-outline-info"  style="margin-right: 60px; margin-top: 30px;width:150px">Update</a>
+			<a href="update.jsp" type="button" class="btn btn-outline-info"  style="margin-right: 60px; margin-top: 30px;width:150px">Update</a>
 			<a href="Logout" type="button" class="btn btn-outline-light"  style="margin-right: 60px; margin-top: 30px;width:150px">Logout</a>
-			<a href="delete.php" type="button" class="btn btn-outline-danger"  style=" margin-top: 30px;width:150px">Delete</a>	
+			<a href="Delete" type="button" class="btn btn-outline-danger"  style=" margin-top: 30px;width:150px">Delete</a>	
 		</div>
 	</footer>
 	<!-- Footer section end -->

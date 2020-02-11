@@ -42,7 +42,7 @@
             <a class="nav-link" href="newsfeed.jsp">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="profiles.php">Profiles</a>
+            <a class="nav-link" href="profiles.jsp">Profiles</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="friends.jsp">Friends</a>

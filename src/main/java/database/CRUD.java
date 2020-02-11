@@ -15,6 +15,11 @@ public class CRUD implements Properties {
 	public static int LOGIN_NOT_VERIFIED = -1;
 	public static int POST_UPLOAD_SUCCESS = 2;
 	public static int POST_UPLOAD_FAIL = -2;
+	public static int UPDATE_SUCCESS = 3;
+	public static int UPDATE_FAILED = -3;
+	public static int DELETE_SUCCESS = 4;
+	public static int DELETE_FAILED = -4;
+	public static int LIKE_DONE = 5;
 	static Connection con=null;
 	static PreparedStatement stmt = null;
 	static ResultSet rs = null;
@@ -291,5 +296,218 @@ public class CRUD implements Properties {
 		}
 		return posts;
 		
+	}
+
+	public static int updateUser(String userName, String email,int id) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("UPDATE users SET Name = ?,Email = ? WHERE id = ?");
+			stmt.setString(1, userName);
+			stmt.setString(2, email);
+			stmt.setInt(3, id);
+			int res = stmt.executeUpdate();
+			if(res>0)
+			{
+				return UPDATE_SUCCESS;
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return UPDATE_FAILED;
+	}
+
+	public static int updatePassword(int id, String password) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("UPDATE users SET Password = ? WHERE id = ?");
+			stmt.setString(1, Hashing.getMd5(password));
+			stmt.setInt(2, id);
+			int res = stmt.executeUpdate();
+			if(res>0)
+			{
+				return UPDATE_SUCCESS;
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return UPDATE_FAILED;
+	}
+
+	public static int deleteUser(User user) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("DELETE FROM users WHERE id = ?");
+			stmt.setInt(1, user.getId());
+			int res = stmt.executeUpdate();
+			stmt = con.prepareStatement("DELETE FROM posts WHERE user_id = ?");
+			stmt.setInt(1, user.getId());
+			res = stmt.executeUpdate();
+			return DELETE_SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return DELETE_FAILED;
+	}
+
+	public static int like(User user, int postId) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT * from likes WHERE user_id = ? and post_id = ?");
+			stmt.setInt(1,user.getId());
+			stmt.setInt(2, postId);
+			rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				stmt = con.prepareStatement("DELETE FROM likes WHERE user_id = ? and post_id = ?");
+				stmt.setInt(1,user.getId());
+				stmt.setInt(2, postId);
+				int res = stmt.executeUpdate();
+				if(res>0)
+				{
+					return LIKE_DONE;
+				}
+			}
+			else
+			{
+				stmt = con.prepareStatement("INSERT into likes(user_id,post_id) VALUES(?,?)");
+				stmt.setInt(1,user.getId());
+				stmt.setInt(2, postId);
+				int res = stmt.executeUpdate();
+				if(res>0)
+				{
+					return LIKE_DONE;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return DELETE_FAILED;
+	}
+	public static ArrayList<String> getLikedUsers(int id)
+	{
+		ArrayList<String> names = null;
+		try {
+			names = new ArrayList<>();
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT user_id from likes WHERE post_id = ?");
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+			while(rs.next())
+			{
+				PreparedStatement tmp = con.prepareStatement("SELECT Name from users WHERE id = ?");
+				tmp.setInt(1, rs.getInt("user_id"));
+				ResultSet res = tmp.executeQuery();
+				if(res.next())
+				{
+					names.add(res.getString("Name"));
+				}
+				res.close();
+				tmp.close();
+			}
+			return names;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return names;
+		
+	}
+	public static HashMap<String, String> getComments(int id)
+	{
+		HashMap<String, String> map = null;
+		try {
+			map = new HashMap<>();
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT * from comments WHERE post_id = ?");
+			stmt.setInt(1, id);
+			rs=stmt.executeQuery();
+			while(rs.next())
+			{
+				PreparedStatement tmp = con.prepareStatement("SELECT Name from users WHERE id = ?");
+				tmp.setInt(1, rs.getInt("user_id"));
+				ResultSet res = tmp.executeQuery();
+				if(res.next())
+				{
+					map.put(res.getString("Name"),rs.getString("Content"));
+				}
+				res.close();
+				tmp.close();
+			}
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return map;
+		
+	}
+
+	public static int insertComment(int userId, int postId, String comment) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("INSERT into comments(Content,user_id,post_id)VALUES(?,?,?)");
+			stmt.setString(1, comment);
+			stmt.setInt(2, userId);
+			stmt.setInt(3, postId);
+			int res = stmt.executeUpdate();
+			if(res>0)
+			{
+				return UPDATE_SUCCESS;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return UPDATE_FAILED;
 	}
 }
