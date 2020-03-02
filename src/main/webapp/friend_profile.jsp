@@ -1,27 +1,24 @@
-<?php
-
-session_start();
-
-$id=$_GET['friend_id'];
-$friend_name=$_GET['friend_name'];
-$friend_email=$_GET['friend_email'];
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "interstellar";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql="SELECT * FROM posts WHERE user_id='$id' ORDER BY id DESC LIMIT 3";
-$result = $conn->query($sql);
-
-?>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="database.*" %>
+    <%@ page import="model.*" %>
+    <%@ page import="java.util.*" %>
+    <%
+    User user =  (User)request.getSession().getAttribute("user");
+    if(user==null)
+    {
+    	response.sendRedirect("login.html");
+    	return;
+    }
+    
+    	int id = Integer.parseInt(request.getParameter("friend_id"));
+        String friendName = request.getParameter("friend_name");
+        String friendEmail = request.getParameter("friend_email");
+        ArrayList<Post> posts = CRUD.fetchRecentPosts(id);
+        String path = CRUD.getImageSource(id);
+    
+    
+    %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +56,7 @@ $result = $conn->query($sql);
 					<div class="col-md-4">
 						<div class="site-logo">
 							<h2><a href="#" >Profile</a></h2>
-							<a href='follow_done.php?friend_id=<?php echo $id?>' type="button" class="btn btn-outline-success" style="margin-right: 60px; margin-top: 30px; width:150px">Follow</a>
-							<a href="follow_done.php?friend_id=$friend_id" type="button" class="btn btn-outline-danger"  style="margin-right: 60px; margin-top: 20px;width:150px">Unfollow</a>
+							
 						</div>
 					</div>
 					
@@ -75,10 +71,10 @@ $result = $conn->query($sql);
 					<div class="main-left-area h-100">
 						<section class="intro-section">
 							<figure class="hero-image">
-								<img src="img/addy.jpg" alt="My image" style="border-radius: 40%">
+								<img src="<%=path %>" alt="NO image found" style="border-radius: 40%">
 							</figure>
 							<div class="hero-text">
-								<h2><?php echo $friend_name?></h2>
+								<h2><%=friendName %></h2>
 								<p>Python, Web Design, Portfolios, Java, Javascripts</p>
 							</div>
 							<p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consectetur eget felis et volutpat. Integer id nulla at diam eleifend fringilla. Donec eu ornare libero. Fusce pulvinar magna id pharetra laoreet. Donec convallis cursus libero. Nam semper risus sit amet rhoncus maximus. Integer eros ante, convallis sit amet vulputate nec, molestie vitae nisi. Phasellus convallis augue vel rhoncus congue. Morbi interdum molestie orci sed ullamcorper. Vivamus aliquet eros ut leo luctus, a venenatis metus faucibus. Maecenas ipsum nisi, iaculis in orci vel, molestie gravida erat. </p>
@@ -87,7 +83,7 @@ $result = $conn->query($sql);
 								<ul>
 									<li><span>Date of Birth</span>July 4, 1999</li>
 									<li><span>Address</span>10D, Paramhansa Deb Road</li>
-									<li><span>E-mail</span><?php echo $friend_email?></li>
+									<li><span>E-mail</span><%=friendEmail %></li>
 									<li><span>Phone </span>+91 8017383645</li>
 								</ul>
 							</div>
@@ -95,7 +91,6 @@ $result = $conn->query($sql);
 						<!---->
 						<section class="extra-section spad">
 							<div class="section-title">
-								<h2>Followers : 69</h2>
 							</div>
 							<div class="row">
 								
@@ -143,25 +138,20 @@ $result = $conn->query($sql);
 							</div>
 							
 							<ul class="resume-list">
-								<?php
-
-								if ($result->num_rows > 0)
-								{
-									 while($row = $result->fetch_assoc())
-									 {
-									 	echo "<li>
-									<!--<h2  style='color: antiquewhite;'>2019</h2>-->
-									<h3  style='color: rgb(253, 226, 191);'>$row[Name]</h3  style='color: antiquewhite;'>
+								<%
+								if(posts.isEmpty())
+								{%>
+									<h4>No post available!</h4>
+								<%}
+								else
+								{for(Post post:posts){%>
+									<li>
+									<h3  style='color: rgb(253, 226, 191);'><%=post.getName() %></h3  style='color: antiquewhite;'>
 									<h4>Sub post title</h4>
-									<p>$row[Content]</p>
-								</li>";
-									 }
-								}else {
-    echo "No post is available!!";
-}
-$conn->close();
-
-								?>
+									<p><%=post.getContent() %></p>
+								</li>
+								<%}}
+								%>
 							</ul>
 						</section>
 						<!-- Resume section end -->
@@ -172,19 +162,19 @@ $conn->close();
 							</div>
 							<div class="review-slider owl-carousel">
 								<div class="single-review">
-									<div class="qut" style="color: #fff;text-decoration-color: #fff;">“</div>
+									<div class="qut" style="color: #fff;text-decoration-color: #fff;">"</div>
 									<p>Sit amet, consectetur adipiscing elit. Sed porttitor orci ut sapien scelerisque viverra. Sed trist ique justo nec mauris efficitur, ut lacinia elit dapibus. In egestas elit in dap ibus laoreet. Duis magna libero, fermentum ut facilisis id, pulvinar eget tortor. Vestibulum pelle ntesque tincidunt lorem, vitae euismod felis porttitor sed. </p>
 									<h3 style="color: #fff;text-decoration-color: #fff;">Robert G. Smith</h3>
 									<h4  style="color: antiquewhite;">Manager, Company</h4  style="color: antiquewhite;">
 								</div>
 								<div class="single-review">
-									<div class="qut" style="color: #fff;text-decoration-color: #fff;">“</div>
+									<div class="qut" style="color: #fff;text-decoration-color: #fff;">"</div>
 									<p>Sit amet, consectetur adipiscing elit. Sed porttitor orci ut sapien scelerisque viverra. Sed trist ique justo nec mauris efficitur, ut lacinia elit dapibus. In egestas elit in dap ibus laoreet. Duis magna libero, fermentum ut facilisis id, pulvinar eget tortor. Vestibulum pelle ntesque tincidunt lorem, vitae euismod felis porttitor sed. </p>
 									<h3 style="color: #fff;text-decoration-color: #fff;">Robert G. Smith</h3>
 									<h4  style="color: antiquewhite;">Manager, Company</h4  style="color: antiquewhite;">
 								</div>
 								<div class="single-review">
-									<div class="qut" style="color: #fff;text-decoration-color: #fff;">“</div>
+									<div class="qut" style="color: #fff;text-decoration-color: #fff;">"</div>
 									<p>Sit amet, consectetur adipiscing elit. Sed porttitor orci ut sapien scelerisque viverra. Sed trist ique justo nec mauris efficitur, ut lacinia elit dapibus. In egestas elit in dap ibus laoreet. Duis magna libero, fermentum ut facilisis id, pulvinar eget tortor. Vestibulum pelle ntesque tincidunt lorem, vitae euismod felis porttitor sed. </p>
 									<h3 style="color: #fff;text-decoration-color: #fff;">Robert G. Smith</h3>
 									<h4  style="color: antiquewhite;">Manager, Company</h4  style="color: antiquewhite;">
@@ -231,8 +221,8 @@ $conn->close();
 	<!-- Footer section start -->
 	<footer class="footer-section">
 		<div class="container text-center">
-			<a href="newsfeed.php" type="button" class="btn btn-outline-warning" style="margin-right: 60px;margin-left: 90px; margin-top: 30px; width:150px">Home</a>
-			<a href="logout_submit.php" type="button" class="btn btn-outline-light"  style="margin-right: 60px; margin-top: 30px;width:150px">Logout</a>	
+			<a href="newsfeed.jsp" type="button" class="btn btn-outline-warning" style="margin-right: 60px;margin-left: 90px; margin-top: 30px; width:150px">Home</a>
+			<a href="Logout" type="button" class="btn btn-outline-light"  style="margin-right: 60px; margin-top: 30px;width:150px">Logout</a>	
 		</div>
 	</footer>
 	<!-- Footer section end -->

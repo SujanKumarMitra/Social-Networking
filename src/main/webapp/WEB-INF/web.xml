@@ -15,10 +15,10 @@
   	<servlet-class>controller.SendMail</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>LoginExecutive</servlet-name>
-  	<display-name>LoginExecutive</display-name>
+  	<servlet-name>Login</servlet-name>
+  	<display-name>Login</display-name>
   	<description></description>
-  	<servlet-class>controller.LoginExecutive</servlet-class>
+  	<servlet-class>controller.Login</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>Logout</servlet-name>
@@ -86,13 +86,19 @@
   	<description></description>
   	<servlet-class>controller.SignUp</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ForgotPassword</servlet-name>
+  	<display-name>ForgotPassword</display-name>
+  	<description></description>
+  	<servlet-class>controller.ForgotPassword</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>SendMail</servlet-name>
   	<url-pattern>/SendMail</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>LoginExecutive</servlet-name>
-  	<url-pattern>/LoginExecutive</url-pattern>
+  	<servlet-name>Login</servlet-name>
+  	<url-pattern>/Login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>Logout</servlet-name>
@@ -137,5 +143,9 @@
   <servlet-mapping>
   	<servlet-name>SignUp</servlet-name>
   	<url-pattern>/SignUp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ForgotPassword</servlet-name>
+  	<url-pattern>/ForgotPassword</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -57,7 +57,33 @@ public class CRUD implements Properties {
 		}
 		return null;
 	}
-
+	public static String getImageSource(int id)
+	{
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT ImageSource from users WHERE id= ?");
+			stmt.setInt(1, id);
+//			stmt.setString(2, Hashing.getMd5(password));
+			rs = stmt.executeQuery();
+			if(rs.next())
+			{
+				return rs.getString(1);
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 	public static ArrayList<Post> fetchPosts()
 	{
 		ArrayList<Post> posts = new ArrayList<Post>();
@@ -543,5 +569,26 @@ public class CRUD implements Properties {
 		return USER_NOT_CREATED;
 		
 		
+	}
+	public static User checkUser(String email) {
+		User user = null;
+		try {
+			Connection con = Properties.getConnection();
+			stmt = con.prepareStatement("SELECT * from users WHERE Email = ?");
+			stmt.setString(1, email);
+			rs=stmt.executeQuery();
+			while(rs.next())
+			{
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("Email"));
+				user.setName(rs.getString("Name"));
+				user.setImageSource(rs.getString("ImageSource"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
 	}
 }

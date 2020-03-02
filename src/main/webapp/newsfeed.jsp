@@ -67,12 +67,7 @@
           <li class="nav-item">
             <a class="nav-link" href="profiles.jsp">Profiles</a>
           </li>
-         <li class="nav-item">
-            <a class="nav-link" href="request.html">Request for fund</a>
-          </li>
-         <li class="nav-item">
-            <a class="nav-link" href="show_request.jsp">Your Requests</a>
-          </li>
+        
           <li class="nav-item">
             <a class="nav-link" href="friends.jsp">Friends</a>
           </li>

@@ -86,8 +86,8 @@ table, th, td {
             		if(user.getId() != currentUser.getId())
             		{%>
             		<tr>
-            <td><a href='friend_profile.jsp?friend_id=<%= user.getId() %> && friend_name=<%=user.getName() %> && friend_email=<%=user.getEmail() %>' style='text-decoration: none;  color:orange'><%=user.getName() %></a></td>
-            <td><a href='www.gmail.com' style='text-decoration: none;  color:orange'><%= user.getEmail() %></td>
+            <td><a href='friend_profile.jsp?friend_id=<%= user.getId() %>&friend_name=<%=user.getName() %>&friend_email=<%=user.getEmail() %>' style='text-decoration: none;  color:orange'><%=user.getName() %></a></td>
+            <td><a href='friend_profile.jsp?friend_id=<%= user.getId() %>&friend_name=<%=user.getName() %>&friend_email=<%=user.getEmail() %>' style='text-decoration: none;  color:orange'><%= user.getEmail() %></td>
             <td><a class='btn btn-outline-success' href='peer_chat.php?friend_id=$row[id]'>Send Email</a></td>
           </tr>
             		
