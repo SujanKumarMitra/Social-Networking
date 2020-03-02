@@ -2,8 +2,6 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import database.CRUD;
-import model.User;
-@MultipartConfig
-public class PostUpload extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
+/**
+ * Servlet implementation class SignUp
+ */
+@MultipartConfig
+public class SignUp extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SignUp() {
+        super();
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String heading = request.getParameter("heading");
-		String content = request.getParameter("content");
-		User user = (User) request.getSession().getAttribute("user");
-		
+		String userName = request.getParameter("organization_name");
+		String email = request.getParameter("organization_email");
+		String pass = request.getParameter("organization_password");
 		String path = getServletContext().getInitParameter("file_upload_path");
 		path += "uploaded_files/";
 		File file = new File(path);
@@ -29,31 +39,28 @@ public class PostUpload extends HttpServlet {
 		path += "BeTogether/";
 		file = new File(path);
 		file.mkdir();
-//		System.out.println(file.getAbsolutePath());
-//		System.out.println(file.mkdir());
-		path += "posts/";
+		path += "profile_photos/";
 		file = new File(path);
 		file.mkdir();
-		Date date = new Date();
-		@SuppressWarnings("deprecation")
-		String str = path + date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+".png";
-		@SuppressWarnings("deprecation")
-		String databaseStr = "/uploaded_files/BeTogether/posts/"+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+".png";
 		for (Part part : request.getParts()) {
-            part.write(str);
+            part.write(path +email+".png");
         }
-		
-		int result = CRUD.postUpload(heading ,content,user.getId(),databaseStr);
-		if(result == CRUD.POST_UPLOAD_SUCCESS)
+		int res = CRUD.createUser(userName, email, pass,"/uploaded_files/BeTogether/profile_photos/"+email+".png");
+		if(res==CRUD.USER_CREATED)
 		{
-			response.sendRedirect("newsfeed.jsp");
+			response.sendRedirect("signup_success.html");
 		}
 		else
 		{
-			response.sendRedirect("upload_fail.html");
+			response.sendRedirect("signup_fail.html");
 		}
 	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

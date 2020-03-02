@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.jasper.tagplugins.jstl.core.Out;
 
 import database.CRUD;
+import model.User;
 
 /**
  * Servlet implementation class Like

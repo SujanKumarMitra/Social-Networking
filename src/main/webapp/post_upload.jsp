@@ -1,3 +1,12 @@
+<%@page import="model.*" %>
+<%
+User user = (User)request.getSession().getAttribute("user");
+if(user==null)
+{
+	response.sendRedirect("login.html");
+	return;
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,7 +65,7 @@
           <h1 style="margin-bottom: 40px; color:orange">
             Post :
           </h1>
-          <form action="PostUpload" method="POST">
+          <form action="PostUpload" method="POST" enctype="multipart/form-data">
             <div class="form-group">
              
               <input
@@ -76,6 +85,9 @@
                 
               <br />
               <br />
+              <input type="file" class = "form-control bg dark" name ="file"> 
+              <br/>
+              <br/>
             <input type="submit" class="btn btn-outline-warning hover-effect" value="Post it">
             
           </form>

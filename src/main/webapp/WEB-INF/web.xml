@@ -4,6 +4,10 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <context-param>  
+    <param-name>file_upload_path</param-name>  
+    <param-value>D:/Apache Server/apache-tomcat-9.0.30/webapps/</param-value>  
+  </context-param>
   <servlet>
   	<servlet-name>SendMail</servlet-name>
   	<display-name>SendMail</display-name>
@@ -20,7 +24,7 @@
   	<servlet-name>Logout</servlet-name>
   	<display-name>Logout</display-name>
   	<description></description>
-  	<servlet-class>database.Logout</servlet-class>
+  	<servlet-class>controller.Logout</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>PostUpload</servlet-name>
@@ -76,6 +80,12 @@
   	<description></description>
   	<servlet-class>controller.Comment</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SignUp</servlet-name>
+  	<display-name>SignUp</display-name>
+  	<description></description>
+  	<servlet-class>controller.SignUp</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>SendMail</servlet-name>
   	<url-pattern>/SendMail</url-pattern>
@@ -123,5 +133,9 @@
   <servlet-mapping>
   	<servlet-name>Comment</servlet-name>
   	<url-pattern>/Comment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SignUp</servlet-name>
+  	<url-pattern>/SignUp</url-pattern>
   </servlet-mapping>
 </web-app>

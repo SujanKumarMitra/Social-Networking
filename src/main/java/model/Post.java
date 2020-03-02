@@ -1,13 +1,20 @@
-package controller;
+package model;
 
 public class Post {
 	private int id;
 	private String name;
 	private int userId;
 	private String content;
+	private String ImageSource;
 	public Post()
 	{
 		super();
+	}
+	public String getImageSource() {
+		return ImageSource;
+	}
+	public void setImageSource(String imageSource) {
+		ImageSource = imageSource;
 	}
 	public int getId() {
 		return id;

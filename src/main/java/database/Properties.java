@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public interface Properties {
-	String url = "jdbc:mysql://localhost:3306/interstellar";
-	String userName = "root";
-	String password = "";
+	final String url = "jdbc:mysql://localhost:3306/be_together";
+	final String userName = "root";
+	final String password = "root";
 	public static Connection getConnection()
 	{
 		try 

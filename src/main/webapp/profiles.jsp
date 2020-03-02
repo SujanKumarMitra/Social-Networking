@@ -3,6 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="controller.*" %>
 <%@ page import="database.*" %>
+<%@ page import="model.*" %>
 <% User user = null;
 user = (User)session.getAttribute("user");
 if(user == null)
@@ -11,6 +12,7 @@ if(user == null)
 	return;
 }
 ArrayList<Post> posts = CRUD.fetchRecentPosts(user.getId());
+String path = getServletContext().getInitParameter("file_upload_path");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +64,7 @@ ArrayList<Post> posts = CRUD.fetchRecentPosts(user.getId());
 					<div class="main-left-area h-100">
 						<section class="intro-section">
 							<figure class="hero-image">
-								<img src="img/addy.jpg" alt="" style="border-radius: 40%">
+								<img src="<%= user.getImageSource() %>" alt="" style="border-radius: 40%">
 							</figure>
 							<div class="hero-text">
 								<h2><%=user.getName() %></h2>

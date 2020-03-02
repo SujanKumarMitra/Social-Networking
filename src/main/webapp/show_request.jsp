@@ -7,6 +7,7 @@
 <%@page import="controller.*" %>
 <%@page import="database.*" %>
 <%@page import="java.sql.*" %>
+<%@ page import="model.*" %>
 <% User user = (User)request.getSession().getAttribute("user");
    HashMap<String,Integer> result = CRUD.getRequests(user.getId());
 %>

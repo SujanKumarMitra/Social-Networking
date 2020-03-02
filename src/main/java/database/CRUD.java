@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import controller.Post;
-import controller.User;
+import model.Post;
+import model.User;
 
 public class CRUD implements Properties {
+	public static int USER_CREATED = 6;
+	public static int USER_NOT_CREATED = -6;
 	public static int LOGIN_VERIFIED = 1;
 	public static int LOGIN_NOT_VERIFIED = -1;
 	public static int POST_UPLOAD_SUCCESS = 2;
@@ -71,6 +73,7 @@ public class CRUD implements Properties {
 				post.setName(rs.getString("Name"));
 				post.setContent(rs.getString("Content"));
 				post.setUserId(rs.getInt("user_id"));
+				post.setImageSource(rs.getString("ImageSource"));
 				posts.add(post);
 			}
 			
@@ -118,13 +121,14 @@ public class CRUD implements Properties {
 		
 	}
 
-	public static int postUpload(String heading, String content, int id) {
+	public static int postUpload(String heading, String content, int id,String path) {
 		try {
 			con = Properties.getConnection();
-			stmt = con.prepareStatement("INSERT into posts(Name,user_id,Content) VALUES(?,?,?)");
+			stmt = con.prepareStatement("INSERT into posts(Name,user_id,Content,ImageSource) VALUES(?,?,?,?)");
 			stmt.setString(1, heading);
 			stmt.setString(3, content);
 			stmt.setInt(2, id);
+			stmt.setString(4, path);
 			int res = stmt.executeUpdate();
 			if(res>0)
 			{
@@ -356,10 +360,10 @@ public class CRUD implements Properties {
 			con = Properties.getConnection();
 			stmt = con.prepareStatement("DELETE FROM users WHERE id = ?");
 			stmt.setInt(1, user.getId());
-			int res = stmt.executeUpdate();
+			stmt.executeUpdate();
 			stmt = con.prepareStatement("DELETE FROM posts WHERE user_id = ?");
 			stmt.setInt(1, user.getId());
-			res = stmt.executeUpdate();
+			stmt.executeUpdate();
 			return DELETE_SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -509,5 +513,35 @@ public class CRUD implements Properties {
 			}
 		}
 		return UPDATE_FAILED;
+	}
+
+	public static int createUser(String name, String email, String pass, String path) {
+		try {
+			con = Properties.getConnection();
+			stmt = con.prepareStatement("INSERT INTO users(Name,Email,Password,ImageSource)VALUES(?,?,?,?)");
+			stmt.setString(1, name);
+			stmt.setString(2, email);
+			stmt.setString(3, Hashing.getMd5(pass));
+			stmt.setString(4, path);
+			int res = stmt.executeUpdate();
+			if(res>0)
+			{
+				return USER_CREATED;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				con.close();
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return USER_NOT_CREATED;
+		
+		
 	}
 }

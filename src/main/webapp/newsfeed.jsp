@@ -4,6 +4,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="controller.*" %>
 <%@page import="database.*" %>
+<%@page import="model.*" %>
 <%
 	User user = null;
 	user = (User)session.getAttribute("user");
@@ -108,11 +109,12 @@
           class="col-2 text-center"
           style="background-color: rgb(22, 14, 11); "
         >
+        
           <div class="sticky-top" style="height: 600px;">
-            <img
+            <img 
               style="width: 100px;border-radius: 50%;margin-top: 20px;"
-              src="<?php echo $_SESSION['image_source'];?>"
-              alt=""
+              src="<%=user.getImageSource()%>"
+              alt="Image Not Found"
             />
             <h2
               style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;margin-top: 10px; color: #fff;"
@@ -143,7 +145,7 @@
 				<div style='margin-top: 60px;'>
 					<div class='jumbotron bg-dark'>
 						<img style='width: 100px; border-radius: 50%; margin-top: 20px;'
-							src='$row2[ImageSource]' alt='' />
+							src='<%= post.getImageSource() %>' alt='' />
 						<h1 class='display-4'><%=post.getName() %></h1> shared by
 						<%= CRUD.getUserNameById(post.getUserId()) %>
 

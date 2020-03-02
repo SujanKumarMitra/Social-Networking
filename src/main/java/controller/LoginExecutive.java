@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.CRUD;
+import model.User;
 
 public class LoginExecutive extends HttpServlet {
 	private static final long serialVersionUID = 1L;
